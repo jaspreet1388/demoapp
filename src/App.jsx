@@ -1,0 +1,142 @@
+// File: src/App.jsx
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
+const Home = () => (
+  <div className="p-8">
+    <h1 className="text-4xl font-bold text-center mb-6">Best Buy Online Store</h1>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <ProductCard name="4K Smart TV" price="$599" />
+      <ProductCard name="Wireless Headphones" price="$129" />
+      <ProductCard name="Gaming Console" price="$499" />
+      <ProductCard name="Smartphone" price="$799" />
+      <ProductCard name="Laptop" price="$999" />
+      <ProductCard name="Air Fryer" price="$89" />
+    </div>
+  </div>
+);
+
+const ProductCard = ({ name, price }) => (
+  <div className="border rounded-2xl shadow p-4 text-center">
+    <h2 className="text-xl font-semibold mb-2">{name}</h2>
+    <p className="text-gray-700 mb-4">{price}</p>
+    <Link
+      to="/success"
+      className="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600"
+    >
+      Add to Cart
+    </Link>
+  </div>
+);
+
+const Admin = () => (
+  <div className="p-8">
+    <h1 className="text-3xl font-bold mb-6">Best Buy Admin Dashboard</h1>
+    <div className="space-y-4">
+      <div className="bg-white shadow rounded-2xl p-4">
+        <p className="font-medium">Total Orders Today: 47</p>
+      </div>
+      <div className="bg-white shadow rounded-2xl p-4">
+        <p className="font-medium">Inventory: 98% Stocked</p>
+      </div>
+      <div className="bg-white shadow rounded-2xl p-4">
+        <p className="font-medium">Low Stock Alerts: 3 Items</p>
+      </div>
+    </div>
+  </div>
+);
+
+const Success = () => (
+  <div className="p-8 text-center">
+    <h1 className="text-3xl font-bold text-green-600 mb-4">Success!</h1>
+    <p className="mb-4">Your order has been placed. We appreciate your business.</p>
+    <Link
+      to="/"
+      className="mt-4 inline-block text-blue-600 hover:underline"
+    >
+      Back to Home
+    </Link>
+  </div>
+);
+
+const App = () => (
+  <Router>
+    <nav className="bg-blue-800 text-white px-6 py-4 flex justify-between">
+      <Link to="/" className="font-bold text-lg">Best Buy</Link>
+      <div className="space-x-4">
+        <Link to="/admin" className="hover:underline">Admin</Link>
+        <Link to="/" className="hover:underline">Store</Link>
+      </div>
+    </nav>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/success" element={<Success />} />
+    </Routes>
+  </Router>
+);
+
+export default App;
+
+
+// File: src/index.jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./index.css";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+// File: src/index.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+// File: tailwind.config.js
+module.exports = {
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+
+// File: package.json
+{
+  "name": "bestbuy-demo-app",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1",
+    "postcss": "^8.4.24",
+    "autoprefixer": "^10.4.14"
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview"
+  }
+}
+
+
+// File: vite.config.js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+});
